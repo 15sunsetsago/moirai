@@ -1,9 +1,9 @@
 # Movie/Show Tracker
 
 A simple Movie/Show tracker web app built in C++ using the Crow web framework. (https://crowcpp.org/master/)
-First project with C++ (first real programming project in general)
-The goal of this project is really to just get my self understanding C++ even just a little bit.
-I'm getting help from a friend too.
+Project primiarly made with C++ (first project for Hrithik).
+The goal of this project is really to just get Hrithik to understand C++ even just a little bit so we can work on projects together.
+Hrithik is being helped by Duran.
 
 # To Do
 
