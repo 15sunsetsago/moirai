@@ -14,6 +14,7 @@
 #include <ranges>
 #include <math.h>
 #include <stdint.h>
+#include <regex>
 
 #define CROW_DISABLE_JSON
 #include <crow.h>
@@ -42,16 +43,19 @@ bool registerUser(const std::string& username, const std::string& password);
 	-	Implement favourites
 	-	map vs vector idk.
 */
+
+void sign_up(std::string request_body);
+
 class user
 {
 	private:
 		std::string user_name;
-		uint64_t password;
+		std::string password;
 	public:
-		user(std::string t_user_name, uint64_t t_password)
+		user(std::string t_user_name, std::string t_password)
 		{
 			user_name = t_user_name;
-			std::hash<uint64_t> hash;
+			std::hash<std::string> hash;
 			password = hash(t_password);
 		}
 
@@ -60,7 +64,7 @@ class user
 			return user_name;
 		}
 
-		uint64_t get_password()
+		const std::string get_password() const
 		{
 			return password;
 		}
@@ -81,7 +85,7 @@ namespace std
 	{
 		size_t operator()(const user& key) const
 		{
-			return hash<std::string>()(key.get_user_name());
+			return hash<std::string>()(key.get_password());
 		}
 	};
 }
