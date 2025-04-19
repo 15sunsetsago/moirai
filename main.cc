@@ -10,8 +10,8 @@ using json = nlohmann::json;
 */
 
 int main() {
-    user test_1("new user", 12345);
-    user test_2("newest user", 12345);
+    //user test_1("new user", 12345);
+    //user test_2("newest user", 12345);
 
     crow::mustache::set_base("templates");
     crow::SimpleApp app;
@@ -77,23 +77,9 @@ int main() {
 
     CROW_ROUTE(app, "/signup").methods(crow::HTTPMethod::Post)
         ([](const crow::request& req) {
-        CROW_LOG_CRITICAL << req.body;
-        std::unordered_map<std::string, std::string> form = parseFormData(req.body);
-
-        std::string username = form["username"];
-        std::string password = form["password"];
-
-        if (infoCheckSignUp(username)) {
+            sign_up(req.body);
             return crow::response(409, "username already taken");
-        }
-
-        if (registerUser(username, password)) {
-            crow::response res("welcome to tracky (account created)");
-            res.add_header("Set-Cookie", "username=" + username);
-            return res;
-        }
-        return crow::response(500, "failed to register user");
-            });
+        });
 
     app.port(8080).multithreaded().run();
     return 0;
