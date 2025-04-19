@@ -1,0 +1,50 @@
+<html>
+<head>
+    <title>Tracky</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h1>Tracky</h1>
+
+    <form action="/search" method="get">
+        <input type="text" name="q" placeholder="Search movies, shows and anime" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <!-- mustache login, log out-->
+    {{#username}}
+    <section>
+        <h2>Welcome back, {{username}}!</h2>
+
+        <!-- logout button -->
+        <form action="/logout" method="POST">
+            <button type="submit">Logout</button>
+        </form>
+    </section>
+    {{/username}}
+
+    <!-- new user -->
+    {{^username}}
+    <section>
+        <h3>Login</h3>
+        <form method="POST" action="/login">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </section>
+
+    <section>
+        <h4>Sign Up</h4>
+        <form action="/signup" method="POST">
+            <input type="text" name="username" placeholder="Enter a username" required>
+            <input type="password" name="password" placeholder="Enter a password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+    </section>
+    {{/username}}
+
+
+</body>
+</html>
