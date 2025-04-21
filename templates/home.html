@@ -37,10 +37,9 @@
     <main class="home_message">
         <h1 class="home_big_title">MOIRAI</h1>
         <p class="home_small_tile">start media tracking today!</p>
-
         <form class="search_form" action="/search" method="get">
             <div class="search_input">
-                <input type="text" name="q" placeholder="|" required />
+                <input type="text" name="q" placeholder="" required autofocus />
             </div>
         </form>
     </main>
@@ -48,7 +47,7 @@
 
 
     <!-- login form -->
-    <div id="login_form" class="hidden_form">
+    <div id="login_form" class="form hidden">
         <div class="form_content">
             <button class="close_form" onclick="hide_form('login_form')">&times;</button>
             <h2>login</h2>
@@ -63,9 +62,8 @@
     </div>
 
 
-
     <!-- sign up form -->
-    <div id="signup_form" class="hidden_form">
+    <div id="signup_form" class="form hidden">
         <div class="form_content">
             <button class="close_form" onclick="hide_form('signup_form')">&times;</button>
             <h2>sign up</h2>
