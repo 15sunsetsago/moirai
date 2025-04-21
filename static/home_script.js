@@ -1,4 +1,5 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () =>
+{
     const login_function = document.getElementById("login_form");
     const signup_function = document.getElementById("signup_form");
     const login_button = document.getElementById("show_login");
