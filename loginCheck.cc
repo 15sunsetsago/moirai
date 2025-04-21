@@ -43,7 +43,7 @@ std::unordered_map<std::string, std::string> parseCookies(const std::string& coo
 };
 
 //checks if login info is correct
-bool infoCheckLogin(const std::string & username, const std::string & password) {
+bool infoCheckLogin(const std::string& username, const std::string& password) {
     std::ifstream users_file("users.json");
     if (!users_file) return false;
 
@@ -60,11 +60,10 @@ bool infoCheckLogin(const std::string & username, const std::string & password) 
             std::string storedPass = item["password"];
 
             if (storedUser == username && storedPass == inputHash) {
-                return true;    
+                return true;
             }
         }
     }
 
     return false;
 }
-

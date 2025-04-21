@@ -14,7 +14,8 @@
 #include <ranges>
 #include <math.h>
 #include <stdint.h>
-#include <regex>
+#include <memory>
+#include <mutex>
 
 #define CROW_DISABLE_JSON
 #include <crow.h>
@@ -44,8 +45,6 @@ bool registerUser(const std::string& username, const std::string& password);
 	-	map vs vector idk.
 */
 
-void sign_up(std::string request_body);
-
 class user
 {
 	private:
@@ -59,53 +58,73 @@ class user
 			password = hash(t_password);
 		}
 
-		const std::string get_user_name() const
-		{
-			return user_name;
-		}
+		std::string get_user_name() { return user_name; }
 
-		const std::string get_password() const
-		{
-			return password;
-		}
+		std::string get_password() { return password; }
 
-		bool operator==(const user& other) const
+		bool operator==(user& other)
 		{
 			// Assuming usernames are unique
 			return user_name == other.get_user_name();
 		}
-
 };
 
 namespace std
 {
-	// template specialization to take user as parameter and uses user_name as 
 	template<>
 	struct hash<user>
 	{
-		size_t operator()(const user& key) const
+		size_t operator()(user& key)
 		{
 			return hash<std::string>()(key.get_password());
 		}
 	};
 }
 
-class user_map 
+class citadel
 {
 	private:
-		std::unordered_map<user, user> user_map;
-
+		std::unordered_map<std::string, user> user_map;
+		std::mutex mtx;
 	public:
-		// Return pointer to map since we have ONE map for entire codebase
-		// Switch to smart pointer if necessary
-		std::unordered_map<user, user>* get_map()
+		// Register User
+		// Perhaps this function should be the one to invalidate duplicate keys (usernames)
+		void add_user(user user)
 		{
-			std::unordered_map<user, user>* ptr = &user_map;
-			return ptr;
+			std::scoped_lock lock(mtx);
+			user_map.insert({ user.get_user_name(), user });
 		}
 
-		void add_user(user new_user)
+		// Could be depracated
+		bool is_user_in_map(std::string user_name) { return user_map.contains(user_name); } 
+
+		// Use AFTER user_name validation (is_user_in_map())
+		user retrieve_user(std::string username) { return user_map.at(username); }
+};
+
+user create_user_from_request(std::shared_ptr<citadel> hash_table, std::string request_body);
+user create_user_for_login(std::string request_body);
+
+void login_validation(std::shared_ptr<citadel> hash_table, user person);
+
+/*
+	Exceptions
+*/
+
+class username_taken_exception : public std::exception
+{
+	public:
+		virtual const char* what() const noexcept
 		{
-			user_map.insert({ new_user, new_user });
+			return "Username taken";
+		}
+};
+
+class login_incorrect_exception : public std::exception
+{
+	public:
+		virtual const char* what() const noexcept
+		{
+			return "Information incorrect";
 		}
 };

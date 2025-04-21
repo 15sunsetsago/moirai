@@ -10,8 +10,11 @@ using json = nlohmann::json;
 */
 
 int main() {
-    //user test_1("new user", 12345);
-    //user test_2("newest user", 12345);
+    // Initiate map
+    std::shared_ptr<citadel> hash_table = std::make_shared<citadel>();
+
+    user debug_user("john", "pork");
+    hash_table->add_user(debug_user);
 
     crow::mustache::set_base("templates");
     crow::SimpleApp app;
@@ -59,26 +62,38 @@ int main() {
         return crow::response(html);
             });
 
-
     CROW_ROUTE(app, "/login").methods(crow::HTTPMethod::Post)
-        ([](const crow::request& req) {
-        std::unordered_map<std::string, std::string> form = parseFormData(req.body);
-
-        if (infoCheckLogin(form["username"], form["password"])) {
-            crow::response res("login works");
-            res.add_header("Set-Cookie", "username=" + form["username"]);
-            return res;
-        }
-        else {
-            return crow::response(401, "Incorrect USER and PASS. (test worked)");
-        }
-            });
-
+        ([hash_table](const crow::request& req) 
+        {
+            try
+            {
+                user possible_user = create_user_for_login(req.body);
+                login_validation(hash_table, possible_user);
+                return crow::response(200, "Login Successful!");
+            }
+            catch (login_incorrect_exception& e)
+            {
+                // HANDLE EXCEPTION BY TELLING END-USER
+                CROW_LOG_INFO << "Login Error: " << e.what();
+                return crow::response(409, "Error logging in");
+            }
+        });
 
     CROW_ROUTE(app, "/signup").methods(crow::HTTPMethod::Post)
-        ([](const crow::request& req) {
-            sign_up(req.body);
-            return crow::response(409, "username already taken");
+        ([hash_table](const crow::request& req) 
+        {
+            try
+            {
+                user temp_user = create_user_from_request(hash_table, req.body);
+                hash_table->add_user(temp_user);
+                return crow::response(200, "Works");
+            }
+            catch (username_taken_exception& e)
+            {
+                // HANDLE EXCEPTION BY TELLING END-USER
+                CROW_LOG_INFO << e.what();
+                return crow::response(409, "username already taken");
+            }
         });
 
     app.port(8080).multithreaded().run();
