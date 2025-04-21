@@ -5,6 +5,7 @@
 // Make sure passwords are alphanumeric only
 
 // RENAME THIS FUNCTION
+// make this function void and add_user in function()
 user create_user_from_request(std::shared_ptr<citadel> hash_table, std::string request_body)
 {
     int pos_and = request_body.find_first_of('&');

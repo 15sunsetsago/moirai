@@ -11,8 +11,8 @@ using json = nlohmann::json;
 
 int main() {
     // Initiate map
-    //citadel hash_table;
     std::shared_ptr<citadel> hash_table = std::make_shared<citadel>();
+
     user debug_user("john", "pork");
     hash_table->add_user(debug_user);
 
@@ -62,7 +62,6 @@ int main() {
         return crow::response(html);
             });
 
-    user test("john", "smith");
     CROW_ROUTE(app, "/login").methods(crow::HTTPMethod::Post)
         ([hash_table](const crow::request& req) 
         {
