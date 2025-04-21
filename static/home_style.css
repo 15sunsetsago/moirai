@@ -1,0 +1,169 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background: #fff;
+    color: #111;
+}
+
+.topbar {
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    background-color: white;
+    z-index: 1000;
+}
+
+.topbar_container {
+    background-color: #000;
+    border-radius: 9999px;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+}
+
+.logo {
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    .buttons button {
+        background: white;
+        color: black;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+
+.welcome {
+    color: white;
+    margin-right: 1rem;
+    font-size: 0.9rem;
+}
+
+.home_message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 100px); /* sets viewport height to 100%  */
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.home_big_title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.home_smalL_title {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+/* search button */
+.search_form {
+    width: 100%;
+    max-width: 600px;
+}
+
+.search_input input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 9999px;
+    font-size: 1rem;
+    text-align: center; 
+    box-sizing: border-box;
+    outline: none; 
+    background-color: #00000000; 
+}
+
+
+    .search_input input::placeholder {
+        color: #000;
+        opacity: 0.2;
+    }
+
+.form {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.hidden {
+    display: none;
+}
+
+.form_content {
+    background: white;
+    border-radius: 8px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+}
+
+    .form_content h2 {
+        margin-bottom: 1rem;
+        text-transform: capitalize;
+    }
+
+    .form_content label {
+        display: block;
+        font-size: 0.9rem;
+        margin-top: 1rem;
+        margin-bottom: 0.25rem;
+        text-transform: lowercase;
+    }
+
+    .form_content input {
+        width: 100%;
+        padding: 0.6rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        margin-bottom: 1rem;
+    }
+
+    .form_content button[type="submit"] {
+        width: 100%;
+        padding: 0.75rem;
+        background: #000;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+.close_form {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #666;
+    cursor: pointer;
+}

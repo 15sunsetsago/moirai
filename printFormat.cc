@@ -2,7 +2,8 @@
 
 using json = nlohmann::json;
 
-std::string fetchAndFormatMediaResults(const std::string& query) {
+std::string fetchAndFormatMediaResults(const std::string& query)
+{
     std::ifstream key_file("key.json");
     json key = json::parse(key_file);
 
@@ -11,61 +12,78 @@ std::string fetchAndFormatMediaResults(const std::string& query) {
 
     cpr::Response cprMediaResponse = cpr::Get(cpr::Url{ url });
 
-    if (cprMediaResponse.status_code != 200) {
-        return "<p>API ERROR FAILED TO FETCH TMDB STATUS CODE: " + std::to_string(cprMediaResponse.status_code) + "</p>";
+    if (cprMediaResponse.status_code != 200)
+    {
+        crow::mustache::context error_ctx;
+        error_ctx["title"] = "tmdb api error";
+        error_ctx["message"] = "api failed to fetch result. status code: " + std::to_string(cprMediaResponse.status_code);
+        return crow::mustache::load("error.html").render_string(error_ctx);
+        //return "<p>API ERROR FAILED TO FETCH TMDB STATUS CODE: " + std::to_string(cprMediaResponse.status_code) + "</p>";
     }
 
     json data = json::parse(cprMediaResponse.text);
 
-    if (!data.contains("results") || !data["results"].is_array() || data["results"].empty()) {
-        return "<p>NOTHING FOUND FOR \"" + query + "\". TRY AGAIN</p>";
+    if (!data.contains("results") || !data["results"].is_array() || data["results"].empty())
+    {
+        crow::mustache::context error_ctx;
+        error_ctx["title"] = "no result found";
+        error_ctx["message"] = "no results found for \"" + query + "\".";
+        return crow::mustache::load("error.html").render_string(error_ctx);
+        //return "<p>NOTHING FOUND FOR \"" + query + "\". TRY AGAIN</p>";
     }
 
-    json results = data["results"];
-    std::string html;
+    crow::mustache::context ctx;
+    std::vector<crow::mustache::context> results;
 
-    for (const json& item : results) {
-        std::string title;
-        if (item.contains("title")) {
-            title = item["title"];
-        }
-        else if (item.contains("name")) {
-            title = item["name"];
-        }
-        else {
-            title = "No TITLE found.";
-        }
+    for (std::size_t i = 0; i < data["results"].size(); ++i)
+    {
+        json item = data["results"][i];
+        crow::mustache::context item_ctx;
 
-        std::string releaseDate;
-        if (item.contains("release_date")) {
-            releaseDate = item["release_date"];
+        if (item.contains("title"))
+        {
+            item_ctx["title"] = item["title"].get<std::string>();
         }
-        else {
-            releaseDate = "No RELEASE DATE found.";
+        else if (item.contains("name"))
+        {
+            item_ctx["title"] = item["name"].get<std::string>();
+        }
+        else
+        {
+            item_ctx["title"] = "Unknown Title";
         }
 
-        std::string description;
-        if (item.contains("overview")) {
-            description = item["overview"];
+        if (item.contains("overview"))
+        {
+            item_ctx["description"] = item["overview"].get<std::string>();
         }
-        else {
-            description = "No DESCRIPTION found.";
-        }
-
-        std::string mediaType;
-        if (item.contains("media_type")) {
-            mediaType = item["media_type"];
-        }
-        else {
-            mediaType = "No MEDIA TYPE found.";
+        else
+        {
+            item_ctx["description"] = "No description available.";
         }
 
-        html += "<div>";
-        html += "<h2>" + title + " (" + releaseDate + ")</h2>";
-        html += "<p>" + description + "</p>";
-        html += "<p>" + mediaType + "</p>";
-        html += "</div>\n";
+        if (item.contains("release_date"))
+        {
+            item_ctx["release"] = item["release_date"].get<std::string>();
+        }
+        else
+        {
+            item_ctx["release"] = "no release date available";
+        }
+
+        if (item.contains("media_type"))
+        {
+            item_ctx["media_type"] = item["media_type"].get<std::string>();
+        }
+        else
+        {
+            item_ctx["media_type"] = "Unknown";
+        }
+
+        results.push_back(std::move(item_ctx));
     }
 
-    return html;
+    ctx["results"] = std::move(results);
+
+    return crow::mustache::load("results.html").render_string(ctx);
 }
