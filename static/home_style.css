@@ -57,7 +57,7 @@ html, body {
     font-size: 0.9rem;
 }
 
-.MOIRARI_MESSAGE {
+.home_message {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -67,29 +67,29 @@ html, body {
     box-sizing: border-box;
 }
 
-.MOIRARI_MESSAGE-title {
+.home_big_title {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
 }
 
-.MOIRARI_MESSAGE-subtitle {
+.home_smalL_title {
     font-size: 1.2rem;
     color: #333;
     margin-bottom: 2rem;
 }
 
 /* search button */
-.search-form {
+.search_form {
     width: 100%;
     max-width: 600px;
 }
 
-.search-input {
+.search_input {
     position: relative;
 }
 
-    .search-input input {
+    .search_input input {
         width: 100%;
         padding: 0.75rem 1rem;
         border: 1px solid #ccc;
@@ -98,7 +98,7 @@ html, body {
         box-sizing: border-box;
     }
 
-.func {
+.form {
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.6);
@@ -112,7 +112,7 @@ html, body {
     display: none;
 }
 
-.func-content {
+.form_content {
     background: white;
     border-radius: 8px;
     padding: 2rem;
@@ -121,12 +121,12 @@ html, body {
     position: relative;
 }
 
-    .func-content h2 {
+    .form_content h2 {
         margin-bottom: 1rem;
         text-transform: capitalize;
     }
 
-    .func-content label {
+    .form_content label {
         display: block;
         font-size: 0.9rem;
         margin-top: 1rem;
@@ -134,7 +134,7 @@ html, body {
         text-transform: lowercase;
     }
 
-    .func-content input {
+    .form_content input {
         width: 100%;
         padding: 0.6rem;
         border-radius: 6px;
@@ -142,7 +142,7 @@ html, body {
         margin-bottom: 1rem;
     }
 
-    .func-content button[type="submit"] {
+    .form_content button[type="submit"] {
         width: 100%;
         padding: 0.75rem;
         background: #000;
@@ -152,7 +152,7 @@ html, body {
         cursor: pointer;
     }
 
-.close-func {
+.close_form {
     position: absolute;
     top: 10px;
     right: 12px;
