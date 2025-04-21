@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (login_button)
     {
-        login_button.addEventListener("click", () => {
+        login_button.addEventListener("click", () =>
+        {
             login_function.class_list.remove("hidden");
             signup_function.class_list.add("hidden");
         });
@@ -14,10 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (signup_button)
     {
-        signup_button.addEventListener("click", () => {
+        signup_button.addEventListener("click", () =>
+        {
             signup_function.class_list.remove("hidden");
             login_function.class_list.add("hidden");
-        });
+        }
+        );
     }
 });
 
