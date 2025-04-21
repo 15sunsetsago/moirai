@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+    <link rel="stylesheet" href="/static/results_style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h1>available titles</h1>
+    {{#results}}
+    <div class="result">
+        <h2>{{title}}</h2>
+        <div class="mediatype">
+            <strong>Type:</strong> {{media_type}} &nbsp; | &nbsp; <strong>Release:</strong> {{release}}
+        </div>
+        <p>{{description}}</p>
+    </div>
+    {{/results}}
+</body>
+</html>
