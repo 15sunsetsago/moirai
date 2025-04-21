@@ -1,0 +1,46 @@
+body {
+    font-family: "Roboto", sans-serif;
+    background: white;
+    color: black;
+    padding: 40px;
+    margin: 0;
+}
+
+h1 {
+    font-size: 2.4em;
+    color: black;
+    margin-bottom: 30px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.result {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    padding: 25px 30px;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+    .result h2 {
+        font-size: 1.8em;
+        margin: 0 0 10px;
+        color: #1f1f1f;
+        font-weight: 600;
+    }
+
+.mediatype {
+    font-size: 0.95em;
+    color: #666;
+    margin-bottom: 12px;
+}
+
+    .mediatype strong {
+        color: #111;
+    }
+
+.result p {
+    font-size: 1em;
+    line-height: 1.6;
+}
