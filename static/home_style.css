@@ -85,17 +85,22 @@ html, body {
     max-width: 600px;
 }
 
-.search_input {
-    position: relative;
+.search_input input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 9999px;
+    font-size: 1rem;
+    text-align: center; 
+    box-sizing: border-box;
+    outline: none; 
+    background-color: #00000000; 
 }
 
-    .search_input input {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        border: 1px solid #ccc;
-        border-radius: 9999px;
-        font-size: 1rem;
-        box-sizing: border-box;
+
+    .search_input input::placeholder {
+        color: #000;
+        opacity: 0.2;
     }
 
 .form {
